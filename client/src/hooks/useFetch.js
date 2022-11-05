@@ -1,39 +1,39 @@
 import { useEffect, useState } from "react";
 
-export const useFetch = (url) => {
+const useFetch = (url) => {
   const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const abortController = new AbortController();
 
-    const fetchBlogData = async () => {
+    const fetchBlogs = async () => {
       await fetch(url)
         .then((res) => {
           if (!res.ok) {
-            setError("no blogs are posted");
+            setError("Cannot find any blog data");
             setIsLoading(true);
           }
           return res.json();
         })
         .then((data) => {
-          setIsLoading(false);
-          setData(data);
           setError(null);
+          setData(data);
+          setIsLoading(false);
         })
         .catch((err) => {
           if (err.name === "AbortError") {
-            console.log("fetch abort");
-          } else {
-            setIsLoading(false);
-            setError(err.message);
+            console.log(err.message);
           }
+          setError(err.message);
+          setIsLoading(true);
         });
     };
-    fetchBlogData();
+    fetchBlogs();
     return () => abortController;
   }, [url]);
-
   return { data, error, isLoading };
 };
+
+export default useFetch;

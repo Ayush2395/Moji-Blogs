@@ -4,7 +4,8 @@ const port = process.env.PORT || 8000;
 const mongoose = require("mongoose");
 require("dotenv").config();
 // import routes
-const blogRoutes = require("./routes/blogsRoutes");
+const blogRoutes = require("./routes/blogs.routes");
+const userRoutes = require("./routes/user.routes");
 
 /*========Middlewares======== */
 app.use(express.json());
@@ -26,3 +27,4 @@ db.once("open", () => console.log("Database connected"));
 
 /*===========Routes========= */
 app.use("/api/blogs", blogRoutes);
+app.use('/api/auth/',userRoutes)
