@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Alert, Button, Spinner } from "react-bootstrap";
+import { Alert, Button, Form, InputGroup, Spinner } from "react-bootstrap";
 import { useSignup } from "../hooks/useSignup";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [show, setShow] = useState(false);
 
   const { singup, error, isLoading } = useSignup();
 
@@ -29,33 +31,32 @@ const Signup = () => {
               <div className="card-title fs-2 text-center fw-normal">
                 Signup
               </div>
-              <form onSubmit={handleSubmit}>
-                <div className="form-group mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Email
-                  </label>
-                  <input
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label htmlFor="email">Email</Form.Label>
+                  <Form.Control
+                    id="email"
+                    type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    type="email"
-                    className="form-control"
-                    id="email"
                     placeholder="type here"
                   />
-                </div>
-                <div className="form-group mb-3">
-                  <label htmlFor="password" className="form-label">
-                    Password
-                  </label>
-                  <input
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    type="password"
-                    className="form-control"
-                    id="password"
-                    placeholder="type here"
-                  />
-                </div>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label htmlFor="password">Password</Form.Label>
+                  <InputGroup>
+                    <InputGroup.Text onClick={() => setShow(!show)}>
+                      {show ? <AiFillEye /> : <AiFillEyeInvisible />}
+                    </InputGroup.Text>
+                    <Form.Control
+                      id="password"
+                      type={show ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="type here"
+                    />
+                  </InputGroup>
+                </Form.Group>
                 {isLoading ? (
                   <Button variant="primary" className="w-100" disabled>
                     <Spinner
@@ -72,7 +73,7 @@ const Signup = () => {
                     Signup
                   </button>
                 )}
-              </form>
+              </Form>
             </div>
           </div>
         </div>

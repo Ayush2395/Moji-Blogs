@@ -1,10 +1,11 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Footer from "./components/Footer";
 
 /*=======components and pages======== */
+// import Footer from "./components/Footer";
 import Navmenu from "./components/Navmenu";
 import useAuth from "./hooks/useAuth";
+import CreateBlogs from "./pages/CreateBlogs";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Page404 from "./pages/Page404";
@@ -27,9 +28,16 @@ const App = () => {
           path="/signup"
           element={!user ? <Signup /> : <Navigate to="/" />}
         />
-        <Route path="/blog/:id" element={<ReadBlog />} />
+        <Route
+          path="/blog/:id"
+          element={user ? <ReadBlog /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/create-blogs"
+          element={user ? <CreateBlogs /> : <Navigate to="/login" />}
+        />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

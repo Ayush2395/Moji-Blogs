@@ -1,6 +1,10 @@
 // const mongoose = require("mongoose");
 const blogs = require("../models/blog.model");
 
+const handleError = (error) => {
+  console.log(error);
+};
+
 /*==========get all the blogs============ */
 const getBlogs = async (req, res) => {
   try {
@@ -19,7 +23,8 @@ const readBlog = async (req, res) => {
     const blog = await blogs.findById(id);
     res.status(200).json(blog);
   } catch (error) {
-    res.status(404).json({ error: "No such blog found" });
+    const errors = handleError(error);
+    res.status(400).json(error);
   }
 };
 
@@ -27,10 +32,11 @@ const readBlog = async (req, res) => {
 const createBlog = async (req, res) => {
   const { title, author, content } = req.body;
   try {
-    const blog = await blogs.create({ title, author, content });
+    const user_id = req.user.id;
+    const blog = await blogs.create({ title, author, content, user_id });
     res.status(200).json(blog);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: "All fields are required" });
   }
 };
 
@@ -56,4 +62,22 @@ const updateBlog = async (req, res) => {
   }
 };
 
-module.exports = { getBlogs, readBlog, createBlog, deleteBlog, updateBlog };
+/*=============get users blogs========== */
+const getUserBlogs = async (req, res) => {
+  try {
+    const user_id = req.user.id;
+    const blog = await blogs.find({ user_id }).sort({ createdAt: -1 });
+    res.status(200).json(blog);
+  } catch (error) {
+    res.status(404).json({ error: "No such blogs found." });
+  }
+};
+
+module.exports = {
+  getBlogs,
+  readBlog,
+  createBlog,
+  deleteBlog,
+  updateBlog,
+  getUserBlogs,
+};

@@ -10,23 +10,24 @@ const useLogin = () => {
     setError(null);
     setIsLoading(false);
 
-    await fetch("/api/auth/login", {
+    const response = await fetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          setIsLoading(true);
-          throw setError("Wrong credential");
-        }
-        return response.json();
-      })
-      .then((user) => {
-        localStorage.setItem("user", JSON.stringify(user));
-        dispatch({ type: "login", payload: user });
-        setIsLoading(false);
-      });
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      setIsLoading(true);
+      setError(json.error);
+    }
+
+    if (response.ok) {
+      localStorage.setItem("user", JSON.stringify(json));
+      dispatch({ type: "login", payload: json });
+      setIsLoading(false);
+    }
   };
 
   return { login, error, isLoading };

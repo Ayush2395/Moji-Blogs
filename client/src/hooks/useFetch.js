@@ -1,38 +1,38 @@
 import { useEffect, useState } from "react";
+import useAuth from "./useAuth";
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
+
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { user } = useAuth();
 
   useEffect(() => {
     const abortController = new AbortController();
 
     const fetchBlogs = async () => {
-      await fetch(url)
-        .then((res) => {
-          if (!res.ok) {
-            setError("Cannot find any blog data");
-            setIsLoading(true);
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setError(null);
-          setData(data);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          if (err.name === "AbortError") {
-            console.log(err.message);
-          }
-          setError(err.message);
-          setIsLoading(true);
-        });
+      const response = await fetch(url, {
+        method: "GET",
+        headers: { authorization: `Bearer ${user.token}` },
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        setError(json.error);
+        setIsLoading(true);
+      }
+      if (response.ok) {
+        setError(null);
+        setIsLoading(false);
+        setData(json);
+      }
     };
     fetchBlogs();
     return () => abortController;
-  }, [url]);
+  }, [url, user]);
   return { data, error, isLoading };
 };
 

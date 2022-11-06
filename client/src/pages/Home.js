@@ -18,7 +18,7 @@ const Home = () => {
         <Row>
           {blogs &&
             blogs.map((blog) => (
-              <Col key={blog._id}>
+              <Col xs="12" sm="6" md="6" lg="4" key={blog._id} className="mb-3">
                 <BlogCards blog={blog} />
               </Col>
             ))}

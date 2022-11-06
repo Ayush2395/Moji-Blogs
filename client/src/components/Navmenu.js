@@ -19,10 +19,10 @@ const Navmenu = () => {
             <Nav className="ms-auto">
               {user && (
                 <div className="d-flex">
-                  <Nav.Link as={NavLink} to="/create-blog">
+                  <Nav.Link as={NavLink} to="/create-blogs">
                     Create Blog
                   </Nav.Link>
-                  <Button onClick={logout} variant="outline-danger">
+                  <Button className="mx-3" onClick={logout} variant="outline-danger">
                     Logout
                   </Button>
                 </div>
@@ -32,7 +32,7 @@ const Navmenu = () => {
                   <Nav.Link as={NavLink} to="/login">
                     Login
                   </Nav.Link>
-                  <Nav.Link as={NavLink} to="/signup">
+                  <Nav.Link className="mx-3" as={NavLink} to="/signup">
                     Signup
                   </Nav.Link>
                 </div>

@@ -15,27 +15,22 @@ export const useSignup = () => {
       throw setError("All Field are required");
     }
 
-    await fetch("/api/auth/signup", {
+    const response = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          setError("error in creating account");
-          setIsLoading(true);
-        }
-        return response.json();
-      })
-      .then((user) => {
-        localStorage.setItem("user", JSON.stringify(user));
-        dispatch({ type: "login", payload: user });
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setIsLoading(true);
-      });
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      setError(json.error);
+      setIsLoading(true);
+    }
+    if (response.ok) {
+      localStorage.setItem("user", JSON.stringify(json));
+      dispatch({ type: "login", payload: json });
+    }
   };
 
   return { singup, error, isLoading };

@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 // import routes
 const blogRoutes = require("./routes/blogs.routes");
+const userBlogs = require("./routes/user.blogs.routes");
 const userRoutes = require("./routes/user.routes");
 
 /*========Middlewares======== */
@@ -27,4 +28,5 @@ db.once("open", () => console.log("Database connected"));
 
 /*===========Routes========= */
 app.use("/api/blogs", blogRoutes);
-app.use('/api/auth/',userRoutes)
+app.use("/api/auth/", userRoutes);
+app.use("/api/userblogs", userBlogs);
