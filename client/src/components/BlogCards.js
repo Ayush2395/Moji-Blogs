@@ -1,11 +1,17 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import useDarkMode from "../hooks/useDarkMode";
 
 const BlogCards = ({ blog }) => {
+  const { darkMode } = useDarkMode();
   return (
     <>
-      <Card>
+      <Card
+        className={`shadow rounded-4 ${
+          darkMode ? "bg-dark text-white" : "bd-light text-dark"
+        }`}
+      >
         <Card.Body>
           <Card.Title className="fs-4">{blog.title}</Card.Title>
           <Card.Text>

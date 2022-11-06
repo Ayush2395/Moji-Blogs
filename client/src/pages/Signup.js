@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Alert, Button, Form, InputGroup, Spinner } from "react-bootstrap";
 import { useSignup } from "../hooks/useSignup";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import useDarkMode from "../hooks/useDarkMode";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -9,6 +10,7 @@ const Signup = () => {
   const [show, setShow] = useState(false);
 
   const { singup, error, isLoading } = useSignup();
+  const { darkMode } = useDarkMode();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +28,11 @@ const Signup = () => {
       >
         <div className="w-100" style={{ maxWidth: "400px" }}>
           {error && <Alert variant="danger">{error}</Alert>}
-          <div className="card">
+          <div
+            className={`card shadow rounded-4 bg-gradient ${
+              darkMode ? "bg-dark text-white" : "bg-light text-dark"
+            }`}
+          >
             <div className="card-body">
               <div className="card-title fs-2 text-center fw-normal">
                 Signup

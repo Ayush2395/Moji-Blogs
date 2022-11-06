@@ -10,9 +10,14 @@ const Home = () => {
       <div className="container" style={{ minHeight: "100vh" }}>
         <h1 className="display-4 fw-normal my-4">Recents Blogs</h1>
         {isLoading && (
-          <Spinner animation="border" role="status" variant="success">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ minHeight: "60vh" }}
+          >
+            <Spinner animation="border" role="status" variant="success">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
         )}
         {error && <p className="text-danger">{error}</p>}
         <Row>

@@ -3,11 +3,14 @@ import { Alert, Button, InputGroup, Spinner } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import useLogin from "../hooks/useLogin";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import useDarkMode from "../hooks/useDarkMode";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
+
+  const { darkMode } = useDarkMode();
 
   const { login, error, isLoading } = useLogin();
 
@@ -31,7 +34,11 @@ const Login = () => {
       >
         <div className="w-100" style={{ maxWidth: "400px" }}>
           {error && <Alert variant="danger">{error}</Alert>}
-          <div className="card">
+          <div
+            className={`card rounded-4 shadow bg-gradient ${
+              darkMode ? "bg-dark text-white" : "bg-light text-dark"
+            }`}
+          >
             <div className="card-body">
               <div className="card-title fs-2 text-center fw-normal">Login</div>
               <Form onSubmit={handleSubmit}>

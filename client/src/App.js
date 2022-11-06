@@ -5,6 +5,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 // import Footer from "./components/Footer";
 import Navmenu from "./components/Navmenu";
 import useAuth from "./hooks/useAuth";
+import useDarkMode from "./hooks/useDarkMode";
 import CreateBlogs from "./pages/CreateBlogs";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -14,30 +15,36 @@ import Signup from "./pages/Signup";
 
 const App = () => {
   const { user } = useAuth();
+  const { darkMode } = useDarkMode();
   return (
     <>
-      <Navmenu />
-      <Routes>
-        <Route path="*" element={<Page404 />} />
-        <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
-        <Route
-          path="/login"
-          element={!user ? <Login /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/signup"
-          element={!user ? <Signup /> : <Navigate to="/" />}
-        />
-        <Route
-          path="/blog/:id"
-          element={user ? <ReadBlog /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/create-blogs"
-          element={user ? <CreateBlogs /> : <Navigate to="/login" />}
-        />
-      </Routes>
-      {/* <Footer /> */}
+      <div className={darkMode ? "bg-dark text-white" : "bg-white text-dark"}>
+        <Navmenu />
+        <Routes>
+          <Route path="*" element={<Page404 />} />
+          <Route
+            path="/"
+            element={user ? <Home /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/login"
+            element={!user ? <Login /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/signup"
+            element={!user ? <Signup /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/blog/:id"
+            element={user ? <ReadBlog /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/create-blogs"
+            element={user ? <CreateBlogs /> : <Navigate to="/login" />}
+          />
+        </Routes>
+        {/* <Footer /> */}
+      </div>
     </>
   );
 };

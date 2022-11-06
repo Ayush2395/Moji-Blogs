@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Alert, Card, Col, Form, Row } from "react-bootstrap";
 import useAuth from "../hooks/useAuth";
+import useDarkMode from "../hooks/useDarkMode";
 
 const BlogForm = () => {
   const [title, setTitle] = useState("");
@@ -10,6 +11,7 @@ const BlogForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
 
+  const { darkMode } = useDarkMode();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -42,7 +44,11 @@ const BlogForm = () => {
       <div className="container d-flex justify-content-center align-items-center">
         <div className="w-100" style={{ maxWidth: "600px" }}>
           {error && <Alert variant="danger">{error}</Alert>}
-          <Card className="mt-5 mx-auto">
+          <Card
+            className={`mt-5 mx-auto shadow-lg rounded-4 bg-gradient ${
+              darkMode ? "bg-dark text-white" : "bg-light text-dark"
+            }`}
+          >
             <Card.Body>
               <Card.Title className="fs-2 text-center text-warning">
                 Create your blog
@@ -90,7 +96,9 @@ const BlogForm = () => {
                 <button
                   disabled={isLoading}
                   type="submit"
-                  className="btn btn-outline-primary shadow"
+                  className={`btn btn-outline-${
+                    darkMode ? "warning" : "primary"
+                  } shadow`}
                 >
                   Publish Blog
                 </button>
