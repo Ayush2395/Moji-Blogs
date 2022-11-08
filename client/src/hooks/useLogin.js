@@ -20,6 +20,7 @@ const useLogin = () => {
 
     if (!response.ok) {
       setIsLoading(true);
+      setTimeout(() => setIsLoading(false), 2500);
       setError(json.error);
     }
 

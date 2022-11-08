@@ -1,36 +1,22 @@
 import React from "react";
-import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import useDarkMode from "../hooks/useDarkMode";
 
 const BlogCards = ({ blog }) => {
-  const { darkMode } = useDarkMode();
   return (
     <>
-      <Card
-        className={`shadow rounded-4 ${
-          darkMode ? "bg-dark text-white" : "bd-light text-dark"
-        }`}
-      >
-        <Card.Body>
-          <Card.Title className="fs-4">{blog.title}</Card.Title>
-          <Card.Text>
-            written by: <span className="text-primary">{blog.author}</span>{" "}
-          </Card.Text>
-          <Card.Text>
-            Pubished on:{" "}
-            <span className="text-success">{blog.createdAt.slice(0, 10)}</span>
-          </Card.Text>
-          <Card.Text>
-            <Link
-              className="text-decoration-none btn btn-outline-secondary w-100"
-              to={`/blog/${blog._id}`}
-            >
-              Read
-            </Link>
-          </Card.Text>
-        </Card.Body>
-      </Card>
+      <div className="card h-52 px-3 py-2">
+        <h1 className="text-pink-400 text-2xl font-semibold">{blog.title}</h1>
+        <p className="text-sm text-green-600">
+          Written by: <span className="text-red-400">{blog.author}</span>
+        </p>
+        <p>{blog.createdAt.slice(0, 10)}</p>
+        <Link
+          className="w-full relative top-[20px] font-semibold px-3 py-2 border border-slate-400 text-slate-400 hover:bg-slate-400 hover:text-white"
+          to={`/blog/${blog._id}`}
+        >
+          Read more
+        </Link>
+      </div>
     </>
   );
 };

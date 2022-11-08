@@ -1,5 +1,4 @@
 import React from "react";
-import { Alert, Col, Row, Spinner } from "react-bootstrap";
 import BlogCards from "../components/BlogCards";
 import BlogForm from "../components/BlogForm";
 import useFetch from "../hooks/useFetch";
@@ -7,32 +6,24 @@ import useFetch from "../hooks/useFetch";
 const CreateBlogs = () => {
   const { data: blogs, error, isLoading } = useFetch("/api/userblogs");
 
- 
-
   return (
     <>
-      <div className="h-auto container py-3">
+      <div className="h-full container py-3">
         <BlogForm />
-        {isLoading && (
-          <div
-            className="d-flex justify-content-center align-items-center"
-            style={{ minHeight: "60vh" }}
-          >
-            <Spinner animation="border" role="status" variant="success">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </div>
-        )}
-        {error && <Alert variant="danger">{error}</Alert>}
-        <h1 className="fs-2 text-center my-3">Your published blogs</h1>
-        <Row>
+
+        <h1 className="text-5xl my-6 text-center">Your published blogs</h1>
+
+        {isLoading && <div className="loading">Loading...</div>}
+        {error && <div className="error">{error}</div>}
+
+        <div className="grid grid-cols-3 gap-x-5 gap-y-6">
           {blogs &&
-            blogs.map((blog, idx) => (
-              <Col className="mb-3" xs="12" sm="12" md="6" lg="4">
-                <BlogCards key={idx} blog={blog} />
-              </Col>
+            blogs.map((blog) => (
+              <div className="blog">
+                <BlogCards blog={blog} />
+              </div>
             ))}
-        </Row>
+        </div>
       </div>
     </>
   );

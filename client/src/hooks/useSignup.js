@@ -7,7 +7,7 @@ export const useSignup = () => {
 
   const { dispatch } = useAuth();
 
-  const singup = async (email, password) => {
+  const signup = async (email, password) => {
     setError(null);
     setIsLoading(false);
 
@@ -26,6 +26,7 @@ export const useSignup = () => {
     if (!response.ok) {
       setError(json.error);
       setIsLoading(true);
+      setTimeout(() => setIsLoading(false), 2500);
     }
     if (response.ok) {
       localStorage.setItem("user", JSON.stringify(json));
@@ -33,5 +34,5 @@ export const useSignup = () => {
     }
   };
 
-  return { singup, error, isLoading };
+  return { signup, error, isLoading };
 };
