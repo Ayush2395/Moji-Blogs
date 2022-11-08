@@ -23,6 +23,7 @@
   background-color: rgb(247, 150, 169);
   color: crimson;
   border: 1px solid crimson;
+  border-radius: 10px;
 }
 
 .loading {
