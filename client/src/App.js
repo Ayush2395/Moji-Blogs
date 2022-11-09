@@ -1,32 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-
-/*=======components and pages======== */
-// import Footer from "./components/Footer";
-import Navmenu from "./components/Navmenu";
+import Navbar from "./components/Navbar";
 import useAuth from "./hooks/useAuth";
-import useDarkMode from "./hooks/useDarkMode";
-import CreateBlogs from "./pages/CreateBlogs";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Page404 from "./pages/Page404";
-import ReadBlog from "./pages/ReadBlog";
 import Signup from "./pages/Signup";
 
 const App = () => {
+  const [open, setOpen] = useState(false);
   const { user } = useAuth();
-  const { darkMode } = useDarkMode();
   return (
     <>
-      <div
-        className={` grid grid-cols-4 gap-x-6
-          ${darkMode ? "bg-slate-700 text-white" : "bg-white text-slate-800"}
-        `}
-      >
-        <div className="col-span-1 w-72 bg-red-500">
-          <Navmenu />
+      <div className="flex h-full w-full">
+        <div className="sidebar sticky top-0">
+          <Navbar open={open} setOpen={setOpen} />
         </div>
-        <div className="app-routes col-span-3 px-5">
+        <div className="main w-full px-10 py-5">
           <Routes>
             <Route path="*" element={<Page404 />} />
             <Route
@@ -41,19 +31,9 @@ const App = () => {
               path="/signup"
               element={!user ? <Signup /> : <Navigate to="/" />}
             />
-            <Route
-              path="/blog/:id"
-              element={user ? <ReadBlog /> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/create-blogs"
-              element={user ? <CreateBlogs /> : <Navigate to="/login" />}
-            />
           </Routes>
         </div>
       </div>
-
-      {/* <Footer /> */}
     </>
   );
 };

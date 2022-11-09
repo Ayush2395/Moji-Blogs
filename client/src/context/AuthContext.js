@@ -9,9 +9,7 @@ const authReducer = (state, action) => {
         user: action.payload,
       };
     case "logout":
-      return {
-        user: null,
-      };
+      return { user: null };
     default:
       return state;
   }
@@ -22,7 +20,9 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (user) dispatch({ type: "login", payload: user });
+    if (user) {
+      dispatch({ type: "login", payload: user });
+    }
   }, []);
 
   return (

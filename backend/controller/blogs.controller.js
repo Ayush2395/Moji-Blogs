@@ -30,10 +30,16 @@ const readBlog = async (req, res) => {
 
 /*============create new blogs=========== */
 const createBlog = async (req, res) => {
-  const { title, author, content } = req.body;
+  const { title, author, content, category } = req.body;
   try {
     const user_id = req.user.id;
-    const blog = await blogs.create({ title, author, content, user_id });
+    const blog = await blogs.create({
+      title,
+      author,
+      content,
+      user_id,
+      category,
+    });
     res.status(200).json(blog);
   } catch (error) {
     res.status(400).json({ error: "All fields are required" });
@@ -73,6 +79,18 @@ const getUserBlogs = async (req, res) => {
   }
 };
 
+/*==============get categorized blogs========== */
+const getCategorizedBlogs = async (req, res) => {
+  const { category } = req.body;
+  console.log(category);
+  try {
+    const blog = await blogs.find({ category: "Learn" });
+    res.status(200).json(blog);
+  } catch (error) {
+    res.status(404).json({ error: "No blogs" });
+  }
+};
+
 module.exports = {
   getBlogs,
   readBlog,
@@ -80,4 +98,5 @@ module.exports = {
   deleteBlog,
   updateBlog,
   getUserBlogs,
+  getCategorizedBlogs,
 };

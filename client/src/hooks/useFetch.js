@@ -3,37 +3,27 @@ import useAuth from "./useAuth";
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
-
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
+  const [error, setError] = useState({ error: false, msg: "" });
   const { user } = useAuth();
 
   useEffect(() => {
-    const abortController = new AbortController();
-
     const fetchBlogs = async () => {
       const response = await fetch(url, {
         method: "GET",
         headers: { authorization: `Bearer ${user.token}` },
       });
-
       const json = await response.json();
-
       if (!response.ok) {
-        setError(json.error);
-        setIsLoading(true);
+        setError({ error: true, msg: json.error });
       }
       if (response.ok) {
-        setError(null);
-        setIsLoading(false);
+        setError({ error: false, msg: json.error });
         setData(json);
       }
     };
     fetchBlogs();
-    return () => abortController;
-  }, [url, user]);
-  return { data, error, isLoading };
+  }, [url,user]);
+  return { data, error };
 };
 
 export default useFetch;

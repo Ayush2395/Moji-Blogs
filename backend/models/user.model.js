@@ -46,7 +46,7 @@ userSchema.statics.signup = async function (email, password) {
 userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
 
-  if (!user) throw Error("All fields are required");
+  if (!user) throw Error("User Doesn't exists");
 
   if (!email || !password) throw Error("Enter email and password");
 

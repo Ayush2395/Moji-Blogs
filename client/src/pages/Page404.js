@@ -1,22 +1,13 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { BsEmojiDizzy } from "react-icons/bs";
 
 const Page404 = () => {
   return (
     <>
-      <div
-        className="container d-flex justify-content-center align-items-center"
-        style={{ minHeight: "100vh" }}
-      >
-        <div className="w-100" style={{ maxWidth: "600px" }}>
-          <Card>
-            <Card.Body>
-              <Card.Title className="display-4 text-center">
-                Sorry, page not found
-              </Card.Title>
-            </Card.Body>
-          </Card>
-        </div>
+      <div className="w-full flex justify-center items-center h-screen">
+        <h1 className="text-6xl">
+          Page not Found <BsEmojiDizzy className="inline" />
+        </h1>
       </div>
     </>
   );

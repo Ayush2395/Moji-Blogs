@@ -4,7 +4,7 @@ const {
   createBlog,
   deleteBlog,
   updateBlog,
-  getUserBlogs,
+  getCategorizedBlogs,
 } = require("../controller/blogs.controller");
 const authRequire = require("../middleware/auth.middelware");
 
@@ -28,7 +28,6 @@ blogs.delete("/:id", deleteBlog);
 /*===========Update blogs=========== */
 blogs.patch("/:id", updateBlog);
 
-/*=========get users blogs========= */
-blogs.get("/", getUserBlogs);
+
 
 module.exports = blogs;
