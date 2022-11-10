@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import useAuth from "./hooks/useAuth";
+import CreateBlog from "./pages/CreateBlog";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Page404 from "./pages/Page404";
+import ReadBlog from "./pages/ReadBlog";
 import Signup from "./pages/Signup";
 
 const App = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const { user } = useAuth();
   return (
     <>
@@ -30,6 +32,14 @@ const App = () => {
             <Route
               path="/signup"
               element={!user ? <Signup /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/create-blog"
+              element={user ? <CreateBlog /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/blog/:id"
+              element={user ? <ReadBlog /> : <Navigate to="/" />}
             />
           </Routes>
         </div>

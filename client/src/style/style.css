@@ -1,6 +1,13 @@
+/* ==========google fonts========= */
+@import url("https://fonts.googleapis.com/css2?family=Recursive:wght@400;500;600&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: "Recursive", sans-serif;
+}
 
 .active {
   background: white;
@@ -19,10 +26,10 @@
   margin: 2rem 0;
 }
 
-.form-group{
+.form-group {
   margin-bottom: 10px;
 }
 
-.form-label{
+.form-label {
   display: block;
 }

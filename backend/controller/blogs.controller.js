@@ -81,8 +81,6 @@ const getUserBlogs = async (req, res) => {
 
 /*==============get categorized blogs========== */
 const getCategorizedBlogs = async (req, res) => {
-  const { category } = req.body;
-  console.log(category);
   try {
     const blog = await blogs.find({ category: "Learn" });
     res.status(200).json(blog);
